@@ -1,0 +1,40 @@
+version: '3'
+services:
+  # Svelte App
+  svelte-frontend:
+    build:
+      context: ./svelte-ff  # Path to your Svelte app's Dockerfile
+    ports:
+      - "80:80"  # Expose the Svelte app on port 80
+    depends_on:
+      - spring-boot
+      - keycloak
+      - nestjs
+
+  # Spring Boot
+  spring-boot:
+    build:
+      context: ./authDemo  # Path to your Spring Boot app's Dockerfile
+    ports:
+      - "8080:8080"  # Expose Spring Boot on port 8080
+    depends_on:
+      - keycloak
+
+  # Keycloak
+  keycloak:
+    image: jboss/keycloak
+    ports:
+      - "8081:8080"  # Expose Keycloak on port 8081
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: h2  # Use H2 database for demonstration (change in production)
+
+  # NestJS
+  nestjs:
+    build:
+      context: ./nestjs-app  # Path to your NestJS app's Dockerfile
+    ports:
+      - "3000:3000"  # Expose NestJS on port 3000
+
+# Add additional configurations, volumes, etc., as needed
