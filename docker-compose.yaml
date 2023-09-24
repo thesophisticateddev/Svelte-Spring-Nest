@@ -16,7 +16,7 @@ services:
     build:
       context: ./authDemo  # Path to your Spring Boot app's Dockerfile
     ports:
-      - "8080:8080"  # Expose Spring Boot on port 8080
+      - "5000:5000"  # Expose Spring Boot on port 8080
     depends_on:
       - keycloak
 
